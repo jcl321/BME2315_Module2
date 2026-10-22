@@ -20,4 +20,4 @@ class Patient:
                     reader = csv.DictReader(f)
                     rows_of_patients = list(reader)
                     for row in rows_of_patients:
-                        Patient(donorID = row['Donor ID'], subject = row['subject_id'], ff_Rbase = float(row['ff_baseline_R']), ff_R1 = float(row['ff_y1_R'].strip()) if row['ff_y1_R'].strip() else None, ff_R2 = float(row['ff_y2_R'].strip()) if row['ff_y2_R'].strip() else None, ff_Lbase = float(row['ff_baseline_L']), ff_L1 = float(row['ff_y1_L'].strip()) if row['ff_y1_L'].strip() else None, ff_L2 = float(row['ff_y2_L'].strip()) if row['ff_y2_L'].strip() else None, d4z4 = int(row['d4z4']))
+                        Patient(subject = row['subject_id'], ff_Rbase = float(row['ff_baseline_R']), ff_R1 = float(row['ff_y1_R'].strip()) if row['ff_y1_R'].strip() else None, ff_R2 = float(row['ff_y2_R'].strip()) if row['ff_y2_R'].strip() else None, ff_Lbase = float(row['ff_baseline_L']), ff_L1 = float(row['ff_y1_L'].strip()) if row['ff_y1_L'].strip() else None, ff_L2 = float(row['ff_y2_L'].strip()) if row['ff_y2_L'].strip() else None, d4z4 = int(row['d4z4']))
