@@ -12,16 +12,17 @@ T2 = df['lag_months_y2'].min()   # earliest Year-2 visit across all subjects
 print(f"T1 = {T1:.2f} months")
 print(f"T2 = {T2:.2f} months")
 
-row = df.loc[df['subject_id'] == '13-0004'].iloc[0]
+row = df.loc[df['subject_id'] == '13-0004'].iloc[0] ## picks example patient to interpolate
 
+# creates arrays of time intervals between datapoints and fat fraction measures
 lag_months = np.array([row['lag_months_baseline'], row['lag_months_y1'], row['lag_months_y2']])
 ff_values = np.array([row['ff_baseline_R'], row['ff_y1_R'], row['ff_y2_R']])
 
 print("lag_months:", lag_months)
 print("ff_values: ", ff_values)
 
-f_linear = interp1d(lag_months, ff_values, kind='linear')
-f_quadratic = interp1d(lag_months, ff_values, kind='quadratic')
+f_linear = interp1d(lag_months, ff_values, kind='linear') # computes linear interpolation between baseline and timepoint
+f_quadratic = interp1d(lag_months, ff_values, kind='quadratic') # computes quadratic interpolation between first and second timepoint
 
 print("f_linear(T1)   =", f_linear(T1))
 print("f_quadratic(T2) =", f_quadratic(T2))
@@ -33,6 +34,7 @@ ORANGE = "#e8821e"
 x_curve = np.linspace(lag_months[0], lag_months[-1], 200)
 quad_curve = f_quadratic(x_curve)
 
+# plots linear and quadratic interpolations to estimate datapoints
 plt.figure(figsize=(7.5, 5))
 plt.plot(x_curve, quad_curve, color=ORANGE, lw=2.5, linestyle="--", label="Quadratic (all 3 points)")
 plt.plot(lag_months[:2], ff_values[:2], color=PINK, lw=2.5, linestyle="--", label="Linear (baseline -> Year 1)")
@@ -46,6 +48,7 @@ plt.grid(True, alpha=0.3)
 plt.legend()
 plt.show()
 
+# repeats interpolation process for every patient
 results = []
 
 for idx, row in df.iterrows():
