@@ -1,9 +1,10 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
 from scipy.interpolate import interp1d
 
-df = pd.read_csv(r"C:\Users\jclyn\OneDrive\BME 2315\Module 2\BME2315_Module2\Module2_FSHD_Dataset.csv")
+df = pd.read_csv("Module2_FSHD_Dataset.csv")
 print(df.shape)
 df.head()
 
@@ -79,7 +80,7 @@ results_df = pd.DataFrame(results)
 results_df.head()
 
 results_df.to_csv(
-    r"C:\Users\jclyn\OneDrive\BME 2315\Module 2\BME2315_Module2\interpolated_estimates.csv",
+    "interpolated_estimates.csv",
     index=False
 )
 
@@ -127,12 +128,24 @@ plt.ylabel('Percent Change in Left Leg Fat Fraction')
 plt.title('Scatter Plot of D4Z4 vs. % Change in Fat Fraction')
 plt.show()
 
+
+
 plt.scatter (dux4_list, percent_change_for_dux4, color = 'blue')
 plt.xlabel('Left Leg DUX4 Signature Baseline')
 plt.ylabel('Percent Change in Left Leg Fat Fraction')
 plt.title('Scatter Plot of DUX4 Signature vs. % Change in Fat Fraction')
+
+model = LinearRegression()
+x_reg = np.array(dux4_list).reshape(-1, 1)
+y = percent_change_for_dux4
+
+model.fit(x_reg, y)
+slope = model.coef_[0]
+intercept = model.intercept_
+r2 = model.score(x_reg, y)
+equation = f"y = {slope:.2f}x + {intercept:.2f}\nR^2 = {r2:.2f}"
+
+plt.text(3, -20, equation, color = "blue", fontsize = 12, verticalalignment = "top")
+plt.plot(x_reg, model.predict(x_reg), color = "blue")
+
 plt.show()
-
-
-
-
