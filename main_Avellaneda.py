@@ -192,6 +192,7 @@ for patient in viable_patients:
 plot_sorted_subject_changes("Year-1 Fat Fraction Change by Patient", all_ff_R1_diff)
 plot_sorted_subject_changes("Year-2 Fat Fraction Change by Patient", all_ff_R2_diff)
 plot_sorted_subject_changes("Total Fat Fraction Change by Patient", net_ff_diff)
+plt.savefig("Total Fat Fraction Change by Patient")
 
 #creates d4z4 groups based on the viable patients list to be used in the dotplot
 d4z4_groups = sorted({patient.get_d4z4() for patient in viable_patients})
@@ -267,3 +268,4 @@ ax.grid(axis="y", alpha=0.3)
 ax.legend()
 fig.tight_layout()
 plt.show()
+plt.savefig("d4z4 Versus Increase in Right Leg Fat Fraction from Baseline to Year 2")

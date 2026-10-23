@@ -48,6 +48,7 @@ plt.ylabel("Fat fraction (%)")
 plt.grid(True, alpha=0.3)
 plt.legend()
 plt.show()
+plt.savefig("Subject 13-0004 Interpolation")
 
 # repeats interpolation process for every patient
 results = []
@@ -125,15 +126,15 @@ for idx, row in results_df.iterrows():
 plt.scatter (d4z4_list, percent_change, color='blue')
 plt.xlabel('D4Z4 Repeats')
 plt.ylabel('Percent Change in Left Leg Fat Fraction')
-plt.title('Scatter Plot of D4Z4 vs. % Change in Fat Fraction')
+plt.title('Scatter Plot of D4Z4 vs. Change in Fat Fraction')
 plt.show()
-
+plt.savefig("D4Z4 vs. Change in Fat Fraction.png")
 
 
 plt.scatter (dux4_list, percent_change_for_dux4, color = 'blue')
 plt.xlabel('Left Leg DUX4 Signature Baseline')
 plt.ylabel('Percent Change in Left Leg Fat Fraction')
-plt.title('Scatter Plot of DUX4 Signature vs. % Change in Fat Fraction')
+plt.title('Scatter Plot of DUX4 Signature vs. Change in Fat Fraction')
 
 model = LinearRegression()
 x_reg = np.array(dux4_list).reshape(-1, 1)
@@ -149,3 +150,4 @@ plt.text(3, -20, equation, color = "blue", fontsize = 12, verticalalignment = "t
 plt.plot(x_reg, model.predict(x_reg), color = "blue")
 
 plt.show()
+plt.savefig("DUX4 Signature vs. Change in Fat Fraction.png")
