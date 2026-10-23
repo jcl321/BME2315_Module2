@@ -136,7 +136,7 @@ plt.show()
 
 #####################################
 
-#instantiate patient objects from the csv files
+#instantiates patient objects from the csv files
 Patient.instantiate_from_csv(Patient, "Module2_FSHD_Dataset.csv")
 #reads the dataset when prompted for specific information
 df = pd.read_csv("Module2_FSHD_Dataset.csv")
@@ -159,6 +159,15 @@ def plot_sorted_subject_changes(title, changes):
     ax.set_ylabel("Patient")
     ax.grid(axis="x", alpha=0.3)
     fig.tight_layout()
+    mean_change = statistics.mean(sorted_changes)
+    ax.axvline(
+        mean_change,
+        color="red",
+        linestyle="--",
+        linewidth=1.5,
+        label=f"Mean: {mean_change:.2f}%",
+    )
+    ax.legend()
     plt.show()
 
 #creates lists for storing viable patients with fat fraction data for 3 separate time points and

@@ -127,6 +127,20 @@ plt.scatter (d4z4_list, percent_change, color='blue')
 plt.xlabel('D4Z4 Repeats')
 plt.ylabel('Percent Change in Left Leg Fat Fraction')
 plt.title('Scatter Plot of D4Z4 vs. Change in Fat Fraction')
+
+model = LinearRegression()
+x_reg = np.array(d4z4_list).reshape(-1, 1)
+y = percent_change
+
+model.fit(x_reg, y)
+slope = model.coef_[0]
+intercept = model.intercept_
+r2 = model.score(x_reg, y)
+equation = f"y = {slope:.2f}x + {intercept:.2f}\nR^2 = {r2:.2f}"
+
+plt.text(6, -20, equation, color = "blue", fontsize = 12, verticalalignment = "top")
+plt.plot(x_reg, model.predict(x_reg), color = "blue")
+
 plt.show()
 plt.savefig("D4Z4 vs. Change in Fat Fraction.png")
 
@@ -136,7 +150,6 @@ plt.xlabel('Left Leg DUX4 Signature Baseline')
 plt.ylabel('Percent Change in Left Leg Fat Fraction')
 plt.title('Scatter Plot of DUX4 Signature vs. Change in Fat Fraction')
 
-model = LinearRegression()
 x_reg = np.array(dux4_list).reshape(-1, 1)
 y = percent_change_for_dux4
 
