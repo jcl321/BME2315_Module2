@@ -234,6 +234,19 @@ group_changes = {
     ]
     for group in d4z4_groups
 }
+if len(group_changes) < 2:
+    raise ValueError("A one-way ANOVA requires at least two D4Z4 groups.")
+
+anova_result = stats.f_oneway(*group_changes.values())
+anova_df_between = len(group_changes) - 1
+anova_df_within = sum(len(changes) for changes in group_changes.values()) - len(group_changes)
+print(
+    "One-way ANOVA (total fat fraction change by D4Z4 group): "
+    f"F({anova_df_between}, {anova_df_within}) = {anova_result.statistic:.3f}, "
+    f"p = {anova_result.pvalue:.3f}"
+)
+print("D4Z4 group sample sizes:", {group: len(changes) for group, changes in group_changes.items()})
+
 #finds the means of the patients within the groups based on d4z4
 group_means = {
     group: statistics.mean(changes)
@@ -274,6 +287,16 @@ ax.set_xlabel("D4Z4 group")
 ax.set_ylabel("Total fat fraction change from baseline (%)")
 ax.set_title("Fat Fraction Increase by D4Z4 Group")
 ax.grid(axis="y", alpha=0.3)
+ax.text(
+    0.02,
+    0.98,
+    f"One-way ANOVA: F({anova_df_between}, {anova_df_within}) = "
+    f"{anova_result.statistic:.3f}, p = {anova_result.pvalue:.3f}",
+    transform=ax.transAxes,
+    ha="left",
+    va="top",
+    bbox={"facecolor": "white", "alpha": 0.8, "edgecolor": "gray"},
+)
 ax.legend()
 fig.tight_layout()
 plt.show()
